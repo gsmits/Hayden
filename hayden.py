@@ -53,19 +53,12 @@ class BaseHandler(tornado.web.RequestHandler):
 class PingHandler(BaseHandler):
     def get(self):
 
-        #changes to see if I can persist to github
-
         targethost = self.get_argument("targethost", None)
-        targetpath = self.get_argument("targetpath", None)
+        targetpath = self.get_argument("targetpath", "/")
 
         try:
             connection = httplib.HTTPConnection(targethost,80)
-
-            if targetpath != None:
-                connection.request("GET", targetpath)
-            else:
-                connection.request("GET", "/")
-
+            connection.request("GET", targetpath)
             response = connection.getresponse()
 
             response_values = {
@@ -75,16 +68,12 @@ class PingHandler(BaseHandler):
               "reason": response.reason,
             }
 
-            if response.status != 200:
-                self.set_status(response.status)
-                self.write("%(targethost)s%(targetpath)s response status: %(status)d reason: %(reason)s" % response_values)
-            else:
-                self.set_status(response.status)
-                self.write("%(targethost)s%(targetpath)s response status: %(status)d reason: %(reason)s" % response_values)
-                
+            self.set_status(response.status)
+            self.write("%(targethost)s%(targetpath)s response status: %(status)d reason: %(reason)s" % response_values)
+
         except Exception:
             self.set_status(503)
-            self.write("{0:>s}{1:>s} is unavailable".format(targethost, targetpath))
+            self.write("%s%s is unavailable" % (targethost, targetpath))
 
 
 class HomeHandler(BaseHandler):
