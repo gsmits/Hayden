@@ -53,6 +53,8 @@ class BaseHandler(tornado.web.RequestHandler):
 class PingHandler(BaseHandler):
     def get(self):
 
+        #changes to see if I can persist to github
+
         targethost = self.get_argument("targethost", None)
         targetpath = self.get_argument("targetpath", None)
 
