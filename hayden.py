@@ -8,6 +8,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import json, urllib
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -56,24 +57,27 @@ class PingHandler(BaseHandler):
         targethost = self.get_argument("targethost", None)
         targetpath = self.get_argument("targetpath", "/")
 
+        response_values = {
+          "targethost": targethost,
+          "targetpath": targetpath,
+          "status": None,
+          "reason": None,
+        }
+
+        self.set_header("Content-type", "application/json")
+
         try:
             connection = httplib.HTTPConnection(targethost,80)
             connection.request("GET", targetpath)
             response = connection.getresponse()
 
-            response_values = {
-              "targethost": targethost,
-              "targetpath": targetpath,
-              "status": response.status,
-              "reason": response.reason,
-            }
+            response_values["status"] = response.status
+            response_values["reason"] = response.reason
 
-            self.set_status(response.status)
-            self.write("%(targethost)s%(targetpath)s response status: %(status)d reason: %(reason)s" % response_values)
+            self.write(json.dumps(response_values))
 
         except Exception:
-            self.set_status(503)
-            self.write("%s%s is unavailable" % (targethost, targetpath))
+            self.write(json.dumps(response_values))
 
 
 class HomeHandler(BaseHandler):
