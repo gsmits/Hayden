@@ -12,11 +12,6 @@ import json, urllib
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
-define("mysql_host", default="127.0.0.1:3306", help="hayden database host")
-define("mysql_database", default="hayden", help="hayden database name")
-define("mysql_user", default="root", help="hayden database user")
-define("mysql_password", default="sm23its", help="blog database password")
-
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -37,16 +32,8 @@ class Application(tornado.web.Application):
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
-        # Have one global connection to the blog DB across all handlers
-        self.db = tornado.database.Connection(
-            host=options.mysql_host, database=options.mysql_database,
-            user=options.mysql_user, password=options.mysql_password)
 
 class BaseHandler(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return self.application.db
-
     def get_current_user(self):
         return self.get_secure_cookie("user")
 
@@ -54,12 +41,9 @@ class BaseHandler(tornado.web.RequestHandler):
 class PingHandler(BaseHandler):
     def get(self):
 
-        targethost = self.get_argument("targethost", None)
-        targetpath = self.get_argument("targetpath", "/")
-
         response_values = {
-          "targethost": targethost,
-          "targetpath": targetpath,
+          "targethost": self.get_argument("targethost", None),
+          "targetpath": self.get_argument("targetpath", "/"),
           "status": None,
           "reason": None,
         }
@@ -67,8 +51,8 @@ class PingHandler(BaseHandler):
         self.set_header("Content-type", "application/json")
 
         try:
-            connection = httplib.HTTPConnection(targethost,80)
-            connection.request("GET", targetpath)
+            connection = httplib.HTTPConnection(response_values["targethost"],80)
+            connection.request("GET", response_values["targetpath"])
             response = connection.getresponse()
 
             response_values["status"] = response.status

@@ -1,6 +1,51 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <style type="text/css">
+    
+        .url{
+            width: 90%;
+        }
+
+        #urlResult{
+
+            width:100%;
+            height:200px;
+            border: 1px solid black;
+        }
+    </style>
+{% end %}
+
 {% block body %}
 
-        
+<p>
+
+    <input id="targetUrl" type="text" value="" title="Enter State" class="url" /><input type="submit" value="TEST" onclick="testUrl()" />
+
+    <div id="urlResult"></div>
+
+</p>
+
+<script type="text/javascript">
+	jQuery(function () {
+
+		jQuery(".url").watermark({ "fontSize": "16px", "text": "ENTER URL", "fontFamily": "Verdana" });
+
+		//Global Default watermark
+		//jQuery("input:text").watermark(); // remove others to prevent duplicate.
+	});
+
+    function testUrl()
+    {
+        $.get('ping?targethost=' + $('#targetUrl').val(), function(data) {
+
+            var result = 'Target Host: ' + data.targethost;
+            result += '<br/>Response Status: ' + data.status;
+            result += '<br/>Response Reason: ' + data.reason;
+            result += '<br/>Submitted By:' + '{{ current_user }}';
+
+          $('#urlResult').html(result)
+        });
+    }
+ </script>
 {% end %}

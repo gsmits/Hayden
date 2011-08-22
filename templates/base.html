@@ -3,6 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
     <title>{{ escape(handler.settings["site_title"]) }}</title>
+    <script src="{{ static_url("jquery-1.4.min.js") }}" type="text/javascript"></script>
+    <script src="{{ static_url("jquery.bb.watermark.min.js") }}" type="text/javascript"></script>	  
     <link rel="stylesheet" href="{{ static_url("site.css") }}" type="text/css"/>
     <link rel="alternate" href="/feed" type="application/atom+xml" title="{{ escape(handler.settings["site_title"]) }}"/>
     {% block head %}{% end %}
