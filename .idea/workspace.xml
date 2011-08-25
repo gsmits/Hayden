@@ -25,10 +25,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="hayden.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="hayden.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hayden.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="19" selection-start="226" selection-end="226" vertical-scroll-proportion="0.34591195">
+            <state line="11" column="19" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/model/user.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="0" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.9343545">
               <folding />
             </state>
           </provider>
@@ -222,6 +231,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hayden" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hayden" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -525,7 +548,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hayden.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="226" selection-end="226" vertical-scroll-proportion="0.34591195">
+        <state line="11" column="19" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="0" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.9343545">
           <folding />
         </state>
       </provider>
