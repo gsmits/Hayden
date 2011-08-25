@@ -9,6 +9,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import json, urllib
+from model import user
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -66,6 +67,15 @@ class PingHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
     def get(self):
+
+        userManager = UserManager()
+        user = userManager.get_user("gsmits")
+
+        if user is not None:
+            self.write(user.user_name)
+        else:
+            self.write(userManager.create_user(1, "gsmits", "glenn@smitsfamily.com"))
+
         self.render("home.html")
 
 
@@ -80,7 +90,7 @@ class AuthLoginHandler(BaseHandler, tornado.auth.GoogleMixin):
     def _on_auth(self, user):
         if not user:
             raise tornado.web.HTTPError(500, "Google auth failed")
-        
+
         self.set_secure_cookie("user", user["name"])
         self.redirect(self.get_argument("next", "/"))
 
