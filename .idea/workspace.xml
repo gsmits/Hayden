@@ -37,7 +37,7 @@
       <file leaf-file-name="user.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="0" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.9343545">
+            <state line="22" column="8" selection-start="580" selection-end="580" vertical-scroll-proportion="0.11378556">
               <folding />
             </state>
           </provider>
@@ -555,7 +555,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.9343545">
+        <state line="22" column="8" selection-start="580" selection-end="580" vertical-scroll-proportion="0.11378556">
           <folding />
         </state>
       </provider>
