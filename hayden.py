@@ -8,7 +8,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-import json, urllib
+import json
 from model import user
 from tornado.options import define, options
 
@@ -68,13 +68,12 @@ class PingHandler(BaseHandler):
 class HomeHandler(BaseHandler):
     def get(self):
 
-        userManager = UserManager()
-        user = userManager.get_user("gsmits")
+        u1 = user.UserManager().get_user("gsmits")
 
-        if user is not None:
-            self.write(user.user_name)
+        if u1 is not None:
+            self.write(u1.user_name)
         else:
-            self.write(userManager.create_user(1, "gsmits", "glenn@smitsfamily.com"))
+            self.write(user.UserManager().save(1, "gsmits", "glenn@smitsfamily.com"))
 
         self.render("home.html")
 
