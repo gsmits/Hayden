@@ -9,7 +9,8 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import json
-from model import user
+from model import users
+from model import urls
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -47,24 +48,27 @@ class PingHandler(BaseHandler):
     def on_response(self, response):
         self.set_header("Content-type", "application/json")
         self.write(json.dumps({ "status": response.code, "targeturl": response.effective_url }))
+
+        urls.insert(response.effective_url, self.get_current_user())
+        
         self.finish()
 
 class HomeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        #u1 = user.UserManager().get_user("bbaroo")
-        
-        #if u1 is not None:
-        #    self.write(u1["user_name"])
-        #else:
-        #    user.UserManager().save(1, "bbaroo", "bbaroo@smitsfamily.com")
-            
-        #    u1 = user.UserManager().get_user("bbaroo")
-
-        #self.write(u1["user_name"])
-
         self.render("home.html")
 
+    def saveUser(self):
+        u1 = users.get_user(self.get_current_user())
+
+        if u1 is not None:
+            self.write(u1["user_name"])
+        else:
+            users.insert(self.get_current_user())
+
+            u1 = users.get_user(self.get_current_user())
+
+        self.write(u1["user_name"])
 
 class AuthLoginHandler(BaseHandler, tornado.auth.GoogleMixin):
     @tornado.web.asynchronous
