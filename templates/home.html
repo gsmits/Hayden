@@ -31,18 +31,15 @@
 
 		jQuery(".url").watermark({ "fontSize": "16px", "text": "ENTER URL", "fontFamily": "Verdana" });
 
-		//Global Default watermark
-		//jQuery("input:text").watermark(); // remove others to prevent duplicate.
 	});
 
     function testUrl()
     {
         $.get('ping?targethost=' + $('#targetUrl').val(), function(data) {
 
-            var result = 'Target Host: ' + data.targethost;
+            var result = 'URL: ' + data.targeturl;
             result += '<br/>Response Status: ' + data.status;
-            result += '<br/>Response Reason: ' + data.reason;
-            result += '<br/>Submitted By:' + '{{ current_user }}';
+            result += '<br/>Submitted By:' + ' {{ current_user }}';
 
           $('#urlResult').html(result)
         });

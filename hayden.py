@@ -33,47 +33,35 @@ class Application(tornado.web.Application):
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
-
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("user")
 
-
 class PingHandler(BaseHandler):
+    @tornado.web.authenticated
+    @tornado.web.asynchronous
     def get(self):
+        http = tornado.httpclient.AsyncHTTPClient()
+        http.fetch(self.get_argument("targethost", None), callback=self.async_callback(self.on_response))
 
-        response_values = {
-          "targethost": self.get_argument("targethost", None),
-          "targetpath": self.get_argument("targetpath", "/"),
-          "status": None,
-          "reason": None,
-        }
-
+    def on_response(self, response):
         self.set_header("Content-type", "application/json")
-
-        try:
-            connection = httplib.HTTPConnection(response_values["targethost"],80)
-            connection.request("GET", response_values["targetpath"])
-            response = connection.getresponse()
-
-            response_values["status"] = response.status
-            response_values["reason"] = response.reason
-
-            self.write(json.dumps(response_values))
-
-        except Exception:
-            self.write(json.dumps(response_values))
-
+        self.write(json.dumps({ "status": response.code, "targeturl": response.effective_url }))
+        self.finish()
 
 class HomeHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
+        #u1 = user.UserManager().get_user("bbaroo")
+        
+        #if u1 is not None:
+        #    self.write(u1["user_name"])
+        #else:
+        #    user.UserManager().save(1, "bbaroo", "bbaroo@smitsfamily.com")
+            
+        #    u1 = user.UserManager().get_user("bbaroo")
 
-        u1 = user.UserManager().get_user("gsmits")
-
-        if u1 is not None:
-            self.write(u1.user_name)
-        else:
-            self.write(user.UserManager().save(1, "gsmits", "glenn@smitsfamily.com"))
+        #self.write(u1["user_name"])
 
         self.render("home.html")
 
